@@ -110,10 +110,10 @@ public class TitleScreenButton implements Renderable, GuiEventListener, LayoutEl
         return GuiEventListener.super.mouseDragged(p_94740_, p_94741_, p_94742_, p_94743_, p_94744_);
     }
 
-    @Override
-    public boolean mouseScrolled(double p_94734_, double p_94735_, double p_94736_) {
-        return GuiEventListener.super.mouseScrolled(p_94734_, p_94735_, p_94736_);
-    }
+//    @Override
+//    public boolean mouseScrolled(double p_94734_, double p_94735_, double p_94736_) {
+//        return GuiEventListener.super.mouseScrolled(p_94734_, p_94735_, p_94736_);
+//    }
 
     @Override
     public boolean keyPressed(int p_94745_, int p_94746_, int p_94747_) {

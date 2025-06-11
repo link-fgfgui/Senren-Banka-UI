@@ -25,6 +25,6 @@ public class InitSounds {
     public static RegistryObject<SoundEvent> YUZU_TITLE_BUTTON_MOD_LIST = register("yuzu_title_button_mod_list");
 
     public static RegistryObject<SoundEvent> register(String name) {
-        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(YuZuUI.MODID, name)));
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(YuZuUI.MODID, name)));
     }
 }

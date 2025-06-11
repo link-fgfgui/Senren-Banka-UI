@@ -8,7 +8,7 @@ import com.mojang.realmsclient.RealmsMainScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.screens.OptionsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
@@ -87,7 +87,7 @@ public class SenrenBankaTitleScreen extends TitleScreen {
 
     @Override
     protected void init() {
-        this.minecraft.setConnectedToRealms(false);
+//        this.minecraft.setConnectedToRealms(false);
         initWidgets();
         if (!isShowed) {
             isShowed = true;
