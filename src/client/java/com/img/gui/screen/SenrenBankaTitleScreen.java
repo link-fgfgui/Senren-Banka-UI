@@ -3,6 +3,7 @@ package com.img.gui.screen;
 import com.img.constant.TextureConst;
 import com.img.gui.*;
 import com.img.init.InitSounds;
+import com.img.mixin.client.ScreenMixin;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.realmsclient.RealmsMainScreen;
 import net.minecraft.client.Minecraft;
@@ -20,9 +21,9 @@ import net.minecraft.client.renderer.texture.Tickable;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.client.gui.ModListScreen;
-import net.minecraftforge.registries.RegistryObject;
+import com.terraformersmc.modmenu.gui.ModsScreen;
 import org.apache.commons.compress.utils.Lists;
+
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,7 +47,6 @@ public class SenrenBankaTitleScreen extends TitleScreen {
     static {
         executor = Executors.newFixedThreadPool(1);
     }
-
     public SenrenBankaTitleScreen() {
     }
 
@@ -79,8 +79,7 @@ public class SenrenBankaTitleScreen extends TitleScreen {
         RenderSystem.enableBlend();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        for (Renderable renderable : this.renderables) {
+        for (Renderable renderable : ((ScreenMixin) this).getRenderables()) {
             renderable.render(guiGraphics, mouseX, mouseY, delta);
         }
         RenderSystem.disableBlend();
@@ -321,7 +320,7 @@ public class SenrenBankaTitleScreen extends TitleScreen {
 
         modListButton.setOnClick((button) -> {
             playSound(InitSounds.YUZU_TITLE_BUTTON_MOD_LIST);
-            this.minecraft.setScreen(new ModListScreen(this));
+            this.minecraft.setScreen(new ModsScreen(this));
         });
 
 
@@ -353,21 +352,14 @@ public class SenrenBankaTitleScreen extends TitleScreen {
 
         quitGameButton.setOnClick((button) -> {
             playSound(InitSounds.YUZU_TITLE_BUTTON_QUIT_GAME);
-            passExitSound=0;
             CompletableFuture.completedFuture(null).whenComplete((unused, e) -> {
-                executor.execute(() -> {
                 try {
                     // 等待音效播放完成
-                    for (int i = 0; i < 150; i++) {
-                        sleep(10);
-                        if (passExitSound==2){
-                            break;
-                        }
-                    }
+                    sleep(1500);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                this.minecraft.stop();});
+                this.minecraft.stop();
             });
         });
 
@@ -399,18 +391,8 @@ public class SenrenBankaTitleScreen extends TitleScreen {
     protected void rebuildWidgets() {
     }
 
-    @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (passExitSound==0){
-            passExitSound=1;
-        } else if (passExitSound==1) {
-            passExitSound=2;
-        }
-        return super.mouseClicked(mouseX,mouseY,button);
-    }
-
-    public void playSound(RegistryObject<SoundEvent> sound) {
+    public void playSound(SoundEvent sound) {
         Minecraft mc = Minecraft.getInstance();
-        mc.getSoundManager().play(SimpleSoundInstance.forUI(sound.get(), 1.0f, mc.options.getSoundSourceVolume(SoundSource.VOICE)));
+        mc.getSoundManager().play(SimpleSoundInstance.forUI(sound, 1.0f, mc.options.getSoundSourceVolume(SoundSource.VOICE)));
     }
 }

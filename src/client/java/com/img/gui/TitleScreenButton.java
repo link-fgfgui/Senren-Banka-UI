@@ -80,7 +80,7 @@ public class TitleScreenButton implements Renderable, GuiEventListener, LayoutEl
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         if (this.visible) {
             if (!isHovered() && isMouseOver(mouseX, mouseY)) {
-                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(InitSounds.YUZU_TITLE_BUTTON_ON.get(), 1.0f, 1.0f));
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(InitSounds.YUZU_TITLE_BUTTON_ON, 1.0f, 1.0f));
             }
             this.isHovered = this.isMouseOver(mouseX, mouseY);
             this.renderButton(guiGraphics, mouseX, mouseY, delta);
@@ -96,9 +96,9 @@ public class TitleScreenButton implements Renderable, GuiEventListener, LayoutEl
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.visible && this.isMouseOver(mouseX, mouseY)) {
             SoundEvent sound= switch (index){
-                case 0,1 -> InitSounds.YUZU_TITLE_BUTTON_SINGLEPLAYER.get();
-                case 2 -> InitSounds.YUZU_TITLE_BUTTON_MUTIPLAYER.get();
-                default -> InitSounds.YUZU_TITLE_BUTTON_CLICK.get();
+                case 0,1 -> InitSounds.YUZU_TITLE_BUTTON_SINGLEPLAYER;
+                case 2 -> InitSounds.YUZU_TITLE_BUTTON_MUTIPLAYER;
+                default -> InitSounds.YUZU_TITLE_BUTTON_CLICK;
             };
             Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(sound, 1.0f, 1.0f));
             if (this.onClick != null) {

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "yuzu",
+  "version": "${version}",
+  "name": "YuZuUI",
+  "description": "Ciallo～(∠ · ω < )⌒★",
+  "authors": [],
+  "contact": {},
+  "license": "unlicense",
+  "icon": "assets/yuzu/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.img.YuZuUIClient"
+    ],
+    "main": [
+      "com.img.YuZuUI"
+    ]
+  },
+  "mixins": [
+    "yuzu.mixins.json",
+    {
+      "config": "yuzu.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "modmenu": "7.2.2"
+  }
+}

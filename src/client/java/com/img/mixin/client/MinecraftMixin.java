@@ -1,4 +1,4 @@
-package com.img.mixin;
+package com.img.mixin.client;
 
 import com.img.gui.screen.SenrenBankaTitleScreen;
 import net.minecraft.client.Minecraft;
