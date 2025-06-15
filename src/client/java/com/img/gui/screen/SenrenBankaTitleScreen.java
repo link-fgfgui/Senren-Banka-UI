@@ -352,14 +352,23 @@ public class SenrenBankaTitleScreen extends TitleScreen {
 
         quitGameButton.setOnClick((button) -> {
             playSound(InitSounds.YUZU_TITLE_BUTTON_QUIT_GAME);
+            if (passExitSound==-1){
+                passExitSound=0;
+            }
             CompletableFuture.completedFuture(null).whenComplete((unused, e) -> {
+                executor.execute(() -> {
                 try {
                     // 等待音效播放完成
-                    sleep(1500);
+                    for (int i = 0; i < 150; i++) {
+                        sleep(10);
+                        if (passExitSound==2){
+                            break;
+                        }
+                    }
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                this.minecraft.stop();
+                this.minecraft.stop();});
             });
         });
 
@@ -389,6 +398,16 @@ public class SenrenBankaTitleScreen extends TitleScreen {
      */
     @Override
     protected void rebuildWidgets() {
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (passExitSound==0){
+            passExitSound=1;
+        } else if (passExitSound==1) {
+            passExitSound=2;
+        }
+        return super.mouseClicked(mouseX,mouseY,button);
     }
 
     public void playSound(SoundEvent sound) {
